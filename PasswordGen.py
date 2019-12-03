@@ -12,3 +12,5 @@ for c in range(2):
 password = ''.join(random.sample(password, len(password)))
 print(password)
 print(len(password))
+
+print("asdasd", "asdasd")

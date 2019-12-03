@@ -1,11 +1,15 @@
 # Import all the modules needed
-import time, subprocess, sys, csv, random, string
+import time, subprocess, sys, csv, random, string, platform
 
 # List all the variables
 menu = True
 option = 0
 arraynumber1 = 0
 arraynumber2 = 0
+chars = "abcdefghijklmnopqrstuvwxyz"
+chars1 = "1234567890"
+chars2 = "!#%&/()="
+password = ""
 
 # Menu
 while menu:
@@ -20,6 +24,7 @@ Val: ''')
                 readCSV = csv.reader(CSVfile, delimiter=',')
                 names = []
                 surnames = []
+                passwords = [0]
                 for row in readCSV:
                     name = row[1]
                     surname = row[2]
@@ -28,8 +33,26 @@ Val: ''')
                 arraynumber1 = int(input("Start From Row: "))
                 arraynumber2 = int(input("Stop at Row: "))
                 while arraynumber1 <= arraynumber2:
-                    print(names[arraynumber1], surnames[arraynumber1])
-                    arraynumber1 += 1
+                    for yeet in range(2):
+                        password += random.choice(chars)
+                        password += random.choice(chars.upper())
+                        password += random.choice(chars1)
+                        password += random.choice(chars2)
+                        password = ''.join(random.sample(password, len(password)
+                        ))
+                    passwords.append(password)
+                    password = ""
+
+                    print(names[arraynumber1], surnames[arraynumber1], passwords[arraynumber1])
+
+                    print(platform.system())
+
+                    if platform.system() == "Windows":
+                        cmd = 'New-ADUser -Name', names[arraynumber1], surnames[arraynumber1], '-GivenName', names[arraynumber1], '-Surname ', surnames[arraynumber1], '-SamAccountName', names[arraynumber1] + '.' + surnames[arraynumber1], '-AccountPassword', passwords[arraynumber1], '-Enabled $true'
+                        #returned_value = subprocess.call(cmd, shell=True)
+                        #print("returned_value: ", returned_value)
+                        print("adasd")
+                        arraynumber1 += 1
                 
         else:
             print("ta bort användare")
@@ -40,17 +63,4 @@ Val: ''')
         menu = False
     else:
         print("Välj ett av de tre alternativen")
-        
 
-chars = "abcdefghijklmnopqrstuvwxyz"
-chars1 = "1234567890"
-chars2 = "!#%&/()="
-password = ""
-for c in range(2):
-    password += random.choice(chars)
-    password += random.choice(chars.upper())
-    password += random.choice(chars1)
-    password += random.choice(chars2)
-password = ''.join(random.sample(password, len(password)))
-print(password)
-print(len(password))
